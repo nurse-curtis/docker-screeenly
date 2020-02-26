@@ -24,7 +24,7 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
  && apt-get install -y nodejs \
  && docker-php-ext-install -j$(nproc) iconv \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
- && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql pgsql exif \
+ && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql pdo_pgsql pgsql exif \
  && rm -R /var/www/html
 
 RUN git clone https://github.com/stefanzweifel/screeenly.git . \
