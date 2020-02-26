@@ -23,12 +23,21 @@ RUN apt update \
  && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
  && apt install -y nodejs npm \
  && docker-php-ext-install -j$(nproc) iconv \
- && apt-get install -y libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev \
- && docker-php-ext-configure gd --with-gd --with-webp-dir --with-jpeg-dir \
-    --with-png-dir --with-zlib-dir --with-xpm-dir --with-freetype-dir \
-    --enable-gd-native-ttf \
- && docker-php-ext-install gd \
+ apt-get install -y --no-install-recommends \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    && docker-php-ext-install -j$(nproc) iconv \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/freetype --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+
+# && apt-get install -y libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev \
+# && docker-php-ext-configure gd --with-gd --with-webp-dir --with-jpeg-dir \
+#    --with-png-dir --with-zlib-dir --with-xpm-dir --with-freetype-dir \
+#    --enable-gd-native-ttf \
+# && docker-php-ext-install gd \
 # && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+
  && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql pdo_pgsql\
  && rm -R /var/www/html \
  && git clone https://github.com/stefanzweifel/screeenly.git . \
