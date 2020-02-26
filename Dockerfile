@@ -26,7 +26,6 @@ RUN apt-get update \
  && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql pgsql \
  && rm -R /var/www/html \
  && git clone https://github.com/stefanzweifel/screeenly.git . \
- && git checkout -b master \
  && npm install --global yarn envsub \
  && npm install --global --unsafe-perm puppeteer \
  && chmod -R o+rx /usr/lib/node_modules/puppeteer/.local-chromium \
